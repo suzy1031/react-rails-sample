@@ -4,7 +4,6 @@ import { useHistory, Link } from 'react-router-dom';
 
 const List = () => {
   const [dataList, setDataList] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     handleGetList();
@@ -20,16 +19,18 @@ const List = () => {
     }
   };
 
+  const history = useHistory();
+
   const handleDelete = async (item) => {
-    console.log('click', item.id)
+    console.log('click', item.id);
     try {
-      const res = await deletePost(item.id)
-      console.log(res.data)
-      handleGetList()
+      const res = await deletePost(item.id);
+      console.log(res.data);
+      handleGetList();
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
   return (
     <>
@@ -40,6 +41,8 @@ const List = () => {
           <tr>
             <th>名前</th>
             <th>猫種</th>
+            <th>好きな食べ物</th>
+            <th>好きなおもちゃ</th>
             <th colSpan='1'></th>
             <th colSpan='1'></th>
             <th colSpan='1'></th>
@@ -50,6 +53,8 @@ const List = () => {
             <tr>
               <td>{item.name}</td>
               <td>{item.nekoType}</td>
+              <td>{item.detailInfo.favoriteFood}</td>
+              <td>{item.detailInfo.favoriteToy}</td>
               <td>
                 <Link to={`/edit/${item.id}`}>更新</Link>
               </td>

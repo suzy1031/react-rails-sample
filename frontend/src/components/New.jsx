@@ -4,26 +4,41 @@ import { createPost } from '../lib/api/post';
 import { useHistory } from 'react-router-dom';
 
 const New = () => {
-  const [value, setValue] = useState({})
+  const [value, setValue] = useState({});
   const history = useHistory();
 
   const handleChange = (e) => {
     setValue({
       ...value,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(value);
+
+    const params = generateParams();
     try {
-      const res = await createPost(value)
-      console.log(res)
-      history.push('/')
+      const res = await createPost(params);
+      console.log(res);
+      history.push('/');
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
+
+  const generateParams = () => {
+    const params = {
+      name: value.name,
+      nekoType: value.nekoType,
+      detailInfo: {
+        favoriteFood: value.favoriteFood,
+        favoriteToy: value.favoriteToy,
+      },
+    };
+    return params;
+  };
 
   return (
     <>
@@ -35,6 +50,6 @@ const New = () => {
         buttonType='登録'
       />
     </>
-  )
+  );
 };
 export default New;

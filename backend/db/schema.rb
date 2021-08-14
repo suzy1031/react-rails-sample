@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_13_215203) do
+ActiveRecord::Schema.define(version: 2021_08_13_222500) do
+
+  create_table "detail_infos", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "post_id", null: false
+    t.string "favorite_food", limit: 100
+    t.string "favorite_toy", limit: 100
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_detail_infos_on_post_id"
+  end
 
   create_table "posts", charset: "utf8mb4", force: :cascade do |t|
     t.string "name"

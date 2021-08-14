@@ -2,9 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { getDetail } from '../lib/api/post';
 import { useHistory, useParams } from 'react-router-dom';
 
-const Detail = (props) => {
-  const [data, setData] = useState({});
+const Detail = () => {
+  const [data, setData] = useState({
+    name: '',
+    neko_type: '',
+    detailInfo: {
+      favorite_food: '',
+      favorite_toy: '',
+    },
+  });
+
   const query = useParams();
+  console.log(query.id);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -27,6 +37,8 @@ const Detail = (props) => {
       <div>ID：{data.id}</div>
       <div>名前：{data.name}</div>
       <div>猫種：{data.nekoType}</div>
+      <div>好きな食べ物：{data.detailInfo.favoriteFood}</div>
+      <div>好きなおもちゃ：{data.detailInfo.favoriteToy}</div>
       <button onClick={() => history.push('/')}>戻る</button>
     </>
   );
