@@ -14,6 +14,8 @@ import Header from './components/commons/Header';
 import SignUp from './components/users/SignUp';
 import SignIn from './components/users/SignIn';
 import MainContainer from './components/layout/MainContainer';
+import UserPost from './components/users/UserPost';
+import Test from './Test';
 // style
 import { CssBaseline } from '@material-ui/core';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
@@ -26,16 +28,16 @@ export const AuthContext = createContext();
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState();
+  const [currentUser, setCurrentUser] = useState({});
 
   const handleGetCurrentUser = async () => {
     try {
       const res = await getCurrentUser();
 
-      if (res?.data.isLogin === true) {
+      if (res.data.isLogin === true) {
         setIsSignedIn(true);
-        setCurrentUser(res?.data.data);
-        console.log(res?.data.data);
+        setCurrentUser(res.data.data);
+        console.log(res.data.data);
       } else {
         console.log('no current user');
       }
@@ -61,6 +63,9 @@ const App = () => {
       return <></>;
     }
   };
+  console.log('isSignedIn', isSignedIn)
+  console.log('loading', loading)
+  console.log('currentUser', currentUser)
 
   return (
     <>
@@ -85,10 +90,12 @@ const App = () => {
                   <Route exact path='/signup' component={SignUp} />
                   <Route exact path='/signin' component={SignIn} />
                   <Private>
-                    <Route exact path='/' component={List} />
+                    <Route exact path='/' component={Test} />
+                    {/* <Route exact path='/' component={List} />
                     <Route path='/post/:id' component={Detail} />
                     <Route exact path='/new' component={New} />
                     <Route path='/edit/:id' component={Edit} />
+                    <Route exact path='/user/posts' component={UserPost} /> */}
                   </Private>
                 </Switch>
               </MainContainer>
