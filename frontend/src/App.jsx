@@ -5,6 +5,7 @@ import {
   Route,
   Redirect,
 } from 'react-router-dom';
+import Cookies from 'js-cookie';
 // component
 import List from './components/List';
 import New from './components/New';
@@ -15,7 +16,6 @@ import SignUp from './components/users/SignUp';
 import SignIn from './components/users/SignIn';
 import MainContainer from './components/layout/MainContainer';
 import UserPost from './components/users/UserPost';
-import Test from './Test';
 // style
 import { CssBaseline } from '@material-ui/core';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
@@ -34,12 +34,15 @@ const App = () => {
     try {
       const res = await getCurrentUser();
 
-      if (res.data.isLogin === true) {
+      if (res?.data.isLogin === true) {
         setIsSignedIn(true);
-        setCurrentUser(res.data.data);
-        console.log(res.data.data);
+        setCurrentUser(res?.data.data);
       } else {
         console.log('no current user');
+        // token有効期限が切れている場合、古いcookieを全て削除
+        Cookies.remove('_access_token');
+        Cookies.remove('_client');
+        Cookies.remove('_uid');
       }
     } catch (e) {
       console.log(e);
@@ -63,9 +66,6 @@ const App = () => {
       return <></>;
     }
   };
-  console.log('isSignedIn', isSignedIn)
-  console.log('loading', loading)
-  console.log('currentUser', currentUser)
 
   return (
     <>
@@ -90,12 +90,11 @@ const App = () => {
                   <Route exact path='/signup' component={SignUp} />
                   <Route exact path='/signin' component={SignIn} />
                   <Private>
-                    <Route exact path='/' component={Test} />
-                    {/* <Route exact path='/' component={List} />
+                    <Route exact path='/' component={List} />
                     <Route path='/post/:id' component={Detail} />
                     <Route exact path='/new' component={New} />
                     <Route path='/edit/:id' component={Edit} />
-                    <Route exact path='/user/posts' component={UserPost} /> */}
+                    <Route exact path='/user/posts' component={UserPost} />
                   </Private>
                 </Switch>
               </MainContainer>
