@@ -1,3 +1,6 @@
+User.create!(name: 'test1', email: 'test@example.com', password: 'password', password_confirmation: 'password')
+User.create!(name: 'test2', email: 'test2@example.com', password: 'password', password_confirmation: 'password')
+
 user1 = User.find(1)
 post1 = Post.create!(name: 'ニャア', neko_type: 'アメリカンショートヘア', user: user1)
 DetailInfo.create!(post: post1, favorite_food: '魚', favorite_toy: '猫じゃらし')
