@@ -94,6 +94,7 @@ const App = () => {
                     <Route path='/post/:id' component={Detail} />
                     <Route exact path='/new' component={New} />
                     <Route path='/edit/:id' component={Edit} />
+                    {/* 追加 */}
                     <Route exact path='/user/posts' component={UserPost} />
                   </Private>
                 </Switch>

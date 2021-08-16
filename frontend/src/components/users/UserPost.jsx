@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 // style
 import { Button } from '@material-ui/core';
@@ -13,24 +13,24 @@ import ListTable from '../commons/ListTable';
 
 const UserPost = () => {
   const { loading, isSignedIn, currentUser } = useContext(AuthContext);
-  const [userPosts, setUserPosts] = useState({})
+  const [userPosts, setUserPosts] = useState({});
   const history = useHistory();
 
   useEffect(() => {
-    handleGetUserPosts()
-  },[currentUser])
+    handleGetUserPosts();
+  }, [currentUser]);
 
-  const handleGetUserPosts = async() => {
+  const handleGetUserPosts = async () => {
     if (!loading) {
       if (isSignedIn) {
-        const res = await getUserPosts(currentUser.id)
-        console.log(res.data)
-        setUserPosts(res.data)
+        const res = await getUserPosts(currentUser.id);
+        console.table(res.data);
+        setUserPosts(res.data);
       } else {
-        <Redirect to='/signin'/>
+        <Redirect to='/signin' />;
       }
     }
-  }
+  };
 
   const handleDelete = async (item) => {
     console.log('click', item.id);
@@ -45,14 +45,16 @@ const UserPost = () => {
   const UserTable = () => {
     if (userPosts.length >= 1) {
       return (
-        <ListTable dataList={userPosts} handleDelete={handleDelete} />
-      )
+        <ListTable
+          dataList={userPosts}
+          handleDelete={handleDelete}
+          currentUser={currentUser}
+        />
+      );
     } else {
-      return (
-        <h2>投稿はありません。</h2>
-      )
+      return <h2>投稿はありません。</h2>;
     }
-  }
+  };
 
   return (
     <>
@@ -67,6 +69,6 @@ const UserPost = () => {
       <SpaceRow height={20} />
       <UserTable />
     </>
-  )
-}
+  );
+};
 export default UserPost;

@@ -26,7 +26,8 @@ const useStyles = makeStyles({
 
 const ListTable = (props) => {
   const classes = useStyles();
-  const { dataList, handleDelete } = props;
+  const { dataList, handleDelete, currentUser } = props;
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label='simple table'>
@@ -62,26 +63,34 @@ const ListTable = (props) => {
               <TableCell align='center'>
                 {subString(item.detailInfo.favoriteToy, 10)}
               </TableCell>
-              <TableCell align='center'>
-                <Link to={`/edit/${item.id}`}>更新</Link>
-              </TableCell>
+              {currentUser.id === item.userId ? (
+                <TableCell align='center'>
+                  <Link to={`/edit/${item.id}`}>更新</Link>
+                </TableCell>
+              ) : (
+                <TableCell align='center'></TableCell>
+              )}
               <TableCell align='center'>
                 <Link to={`/post/${item.id}`}>詳細へ</Link>
               </TableCell>
-              <TableCell align='center'>
-                <Button
-                  variant='contained'
-                  color='secondary'
-                  onClick={() => handleDelete(item)}
-                >
-                  削除
-                </Button>
-              </TableCell>
+              {currentUser.id === item.userId ? (
+                <TableCell align='center'>
+                  <Button
+                    variant='contained'
+                    color='secondary'
+                    onClick={() => handleDelete(item)}
+                  >
+                    削除
+                  </Button>
+                </TableCell>
+              ) : (
+                <TableCell align='center'></TableCell>
+              )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-  )
-}
-export default ListTable
+  );
+};
+export default ListTable;

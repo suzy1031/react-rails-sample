@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { getList, deletePost } from '../lib/api/post';
 import { useHistory } from 'react-router-dom';
 // style
@@ -6,8 +6,12 @@ import { Button } from '@material-ui/core';
 // component
 import ListTable from './commons/ListTable';
 import SpaceRow from './commons/SpaceRow';
+// context
+import { AuthContext } from '../App';
 
 const List = () => {
+  const { loading, isSignedIn, setIsSignedIn, currentUser } =
+    useContext(AuthContext);
   const [dataList, setDataList] = useState([]);
 
   useEffect(() => {
@@ -17,7 +21,7 @@ const List = () => {
   const handleGetList = async () => {
     try {
       const res = await getList();
-      console.log(res.data);
+      console.table(res.data);
       setDataList(res.data);
     } catch (e) {
       console.log(e);
@@ -33,7 +37,7 @@ const List = () => {
       console.log(res.data);
       handleGetList();
     } catch (e) {
-      console.log(e);
+      console.log(e.response);
     }
   };
 
@@ -48,7 +52,11 @@ const List = () => {
         新規作成
       </Button>
       <SpaceRow height={20} />
-      <ListTable dataList={dataList} handleDelete={handleDelete} />
+      <ListTable
+        dataList={dataList}
+        handleDelete={handleDelete}
+        currentUser={currentUser}
+      />
     </>
   );
 };

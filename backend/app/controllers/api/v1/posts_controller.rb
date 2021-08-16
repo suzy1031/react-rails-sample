@@ -1,5 +1,5 @@
 class Api::V1::PostsController < ApplicationController
-  before_action :authenticate_api_v1_user!, only: [:update, :destroy]
+  before_action :authenticate_api_v1_user!, only: [:create, :update, :destroy]
 
   def index
     render json: Post.all.to_json(include: :detail_info)

@@ -24,7 +24,7 @@ const New = () => {
       console.log(res);
       history.push('/');
     } catch (e) {
-      console.log(e);
+      console.log(e.response);
     }
   };
 
