@@ -51,7 +51,7 @@ const ListTable = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {dataList.map((item, index) => (
+          {dataList?.map((item, index) => (
             <TableRow key={index}>
               <TableCell align='center'>{subString(item.name, 15)}</TableCell>
               <TableCell align='center'>

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { getList, deletePost } from '../lib/api/post';
+import React, { useEffect, useContext } from 'react';
+import { deletePost } from '../lib/api/post';
 import { useHistory } from 'react-router-dom';
 // style
 import { Button } from '@material-ui/core';
@@ -8,25 +8,18 @@ import ListTable from './commons/ListTable';
 import SpaceRow from './commons/SpaceRow';
 // context
 import { AuthContext } from '../App';
+// redux
+import { useSelector, useDispatch } from 'react-redux';
+import allActions from '../actions/allActions';
 
 const List = () => {
-  const { loading, isSignedIn, setIsSignedIn, currentUser } =
-    useContext(AuthContext);
-  const [dataList, setDataList] = useState([]);
+  const dispatch = useDispatch();
+  const postList = useSelector((state) => state.asyncListData).payload;
+  const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    handleGetList();
+    dispatch(allActions.getAsyncListData());
   }, []);
-
-  const handleGetList = async () => {
-    try {
-      const res = await getList();
-      console.table(res.data);
-      setDataList(res.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const history = useHistory();
 
@@ -35,7 +28,7 @@ const List = () => {
     try {
       const res = await deletePost(item.id);
       console.log(res.data);
-      handleGetList();
+      dispatch(allActions.getAsyncListData());
     } catch (e) {
       console.log(e.response);
     }
@@ -53,7 +46,7 @@ const List = () => {
       </Button>
       <SpaceRow height={20} />
       <ListTable
-        dataList={dataList}
+        dataList={postList}
         handleDelete={handleDelete}
         currentUser={currentUser}
       />
