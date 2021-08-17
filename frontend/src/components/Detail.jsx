@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { getDetail } from '../lib/api/post';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import SpaceRow from './commons/SpaceRow';
 // style
@@ -13,6 +12,9 @@ import {
   Paper,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+// redux
+import { useSelector, useDispatch } from 'react-redux';
+import allActions from '../redux/actions/allActions';
 
 const useStyles = makeStyles({
   table: {
@@ -24,34 +26,18 @@ const useStyles = makeStyles({
 });
 
 const Detail = () => {
+  const dispatch = useDispatch();
+  const postDetail = useSelector((state) => state.asyncDetailData).payload;
   const classes = useStyles();
-  const [data, setData] = useState({
-    name: '',
-    neko_type: '',
-    detailInfo: {
-      favorite_food: '',
-      favorite_toy: '',
-    },
-  });
 
   const query = useParams();
-  console.log(query.id);
 
   const history = useHistory();
 
   useEffect(() => {
-    handleGetDetail(query);
-  }, [query]);
-
-  const handleGetDetail = async (query) => {
-    try {
-      const res = await getDetail(query.id);
-      console.log(res.data);
-      setData(res.data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    const id = query.id;
+    dispatch(allActions.getAsyncDetailData(id));
+  }, []);
 
   return (
     <>
@@ -71,26 +57,26 @@ const Detail = () => {
               <TableCell align='right' className={classes.fontWeight}>
                 ID：
               </TableCell>
-              <TableCell align='center'>{data.id}</TableCell>
+              <TableCell align='center'>{postDetail?.id}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align='right' className={classes.fontWeight}>
                 名前：
               </TableCell>
-              <TableCell align='center'>{data.name}</TableCell>
+              <TableCell align='center'>{postDetail?.name}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align='right' className={classes.fontWeight}>
                 猫種：
               </TableCell>
-              <TableCell align='center'>{data.nekoType}</TableCell>
+              <TableCell align='center'>{postDetail?.nekoType}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell align='right' className={classes.fontWeight}>
                 好きな食べ物：
               </TableCell>
               <TableCell align='center'>
-                {data.detailInfo.favoriteFood}
+                {postDetail?.detailInfo.favoriteFood}
               </TableCell>
             </TableRow>
             <TableRow>
@@ -98,7 +84,7 @@ const Detail = () => {
                 好きなおもちゃ：
               </TableCell>
               <TableCell align='center'>
-                {data.detailInfo.favoriteToy}
+                {postDetail?.detailInfo.favoriteToy}
               </TableCell>
             </TableRow>
           </TableBody>
