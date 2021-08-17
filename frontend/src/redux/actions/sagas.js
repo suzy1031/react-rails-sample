@@ -1,5 +1,5 @@
 import { put, takeLatest, all } from 'redux-saga/effects';
-import client from '../lib/api/client';
+import client from '../../lib/api/client';
 
 const runOurAction = function* () {
   let remoteData;

@@ -10,7 +10,7 @@ import SpaceRow from './commons/SpaceRow';
 import { AuthContext } from '../App';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../actions/allActions';
+import allActions from '../redux/actions/allActions';
 
 const List = () => {
   const dispatch = useDispatch();
