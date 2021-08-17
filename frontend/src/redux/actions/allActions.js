@@ -1,7 +1,21 @@
+export const Types = {
+  GET_ASYNC_LIST_DATA: 'GET_ASYNC_LIST_DATA',
+  GET_LIST_SUCCESS: 'GET_LIST_SUCCESS',
+  GET_ASYNC_DETAIL_DATA: 'GET_ASYNC_DETAIL_DATA',
+  GET_ERROR: 'GET_ERROR',
+};
+
 const getAsyncListData = () => {
   return {
-    type: 'GET_ASYNC_LIST_DATA',
+    type: Types.GET_ASYNC_LIST_DATA,
   };
 };
 
-export default { getAsyncListData };
+const getAsyncDetailData = (id) => {
+  return {
+    id: id,
+    type: 'GET_ASYNC_DETAIL_DATA',
+  };
+};
+
+export default { getAsyncListData, getAsyncDetailData };
