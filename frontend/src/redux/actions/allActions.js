@@ -1,8 +1,8 @@
 export const Types = {
+  SET_DATA: 'SET_DATA',
+  SET_DETAIL_DATA: 'SET_DETAIL_DATA',
   GET_ASYNC_LIST_DATA: 'GET_ASYNC_LIST_DATA',
-  GET_LIST_SUCCESS: 'GET_LIST_SUCCESS',
   GET_ASYNC_DETAIL_DATA: 'GET_ASYNC_DETAIL_DATA',
-  GET_ERROR: 'GET_ERROR',
 };
 
 const getAsyncListData = () => {
@@ -14,7 +14,7 @@ const getAsyncListData = () => {
 const getAsyncDetailData = (id) => {
   return {
     id: id,
-    type: 'GET_ASYNC_DETAIL_DATA',
+    type: Types.GET_ASYNC_DETAIL_DATA,
   };
 };
 

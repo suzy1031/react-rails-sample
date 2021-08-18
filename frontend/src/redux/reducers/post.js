@@ -1,7 +1,9 @@
+import { Types } from '../actions/allActions';
+
 // 一覧
 const asyncListData = (state = '', action) => {
   switch (action.type) {
-    case 'SET_DATA':
+    case Types.SET_DATA:
       return { ...state, payload: action.payload };
     default:
       return state;
@@ -11,7 +13,7 @@ const asyncListData = (state = '', action) => {
 // 詳細
 const asyncDetailData = (state = '', action) => {
   switch (action.type) {
-    case 'SET_DETAIL_DATA':
+    case Types.SET_DETAIL_DATA:
       return { ...state, payload: action.payload };
     default:
       return state;

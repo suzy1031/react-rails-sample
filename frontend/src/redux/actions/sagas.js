@@ -1,5 +1,6 @@
 import { put, takeEvery, all, call } from 'redux-saga/effects';
 import { getList, getDetail } from '../../lib/api/post';
+import { Types } from '../actions/allActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数
 
@@ -25,20 +26,20 @@ import { getList, getDetail } from '../../lib/api/post';
 // 戻り値 => iterator
 const runListAction = function* () {
   const result = yield call(getList);
-  yield put({ type: 'SET_DATA', payload: result.data });
+  yield put({ type: Types.SET_DATA, payload: result.data });
 };
 function* getAsyncListDataWatcher() {
-  yield takeEvery('GET_ASYNC_LIST_DATA', runListAction);
+  yield takeEvery(Types.GET_ASYNC_LIST_DATA, runListAction);
 }
 
 // 詳細
 const runDetailAction = function* (arg) {
   // call(apiClient, argument)
   const result = yield call(getDetail, arg.id);
-  yield put({ type: 'SET_DETAIL_DATA', payload: result.data });
+  yield put({ type: Types.SET_DETAIL_DATA, payload: result.data });
 };
 function* getAsyncDetailDataWatcher() {
-  yield takeEvery('GET_ASYNC_DETAIL_DATA', runDetailAction);
+  yield takeEvery(Types.GET_ASYNC_DETAIL_DATA, runDetailAction);
 }
 
 // rootSagaでsagaの処理を配列で管理する
