@@ -42,7 +42,7 @@ class Api::V1::PostsController < ApplicationController
     post = Post.find(params[:id])
     if current_api_v1_user.id == post.user_id
       post.destroy
-      render json: post.to_json(include: :detail_info)
+      render json: { message: 'delete successfull' }, status: 200
     else
       render json: { message: 'can not delete data' }, status: 422
     end
