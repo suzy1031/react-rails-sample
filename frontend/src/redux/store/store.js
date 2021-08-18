@@ -4,7 +4,10 @@ import createSagaMiddleware from 'redux-saga';
 import { createStore, applyMiddleware } from 'redux';
 import rootSaga from '../actions/sagas';
 
-const initialState = { asyncListData: '', asyncDetailData: '' };
+const initialState = {
+  asyncListData: '',
+  asyncDetailData: '',
+};
 // redux-sagaはreduxのmiddlewareになるのでcreateStoreに設定する
 const sagaMiddleware = createSagaMiddleware();
 

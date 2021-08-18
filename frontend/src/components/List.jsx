@@ -1,5 +1,4 @@
 import React, { useEffect, useContext } from 'react';
-import { deletePost } from '../lib/api/post';
 import { useHistory } from 'react-router-dom';
 // style
 import { Button } from '@material-ui/core';
@@ -24,14 +23,9 @@ const List = () => {
   const history = useHistory();
 
   const handleDelete = async (item) => {
-    console.log('click', item.id);
-    try {
-      const res = await deletePost(item.id);
-      console.log(res.data);
-      dispatch(allActions.getAsyncListData());
-    } catch (e) {
-      console.log(e.response);
-    }
+    const id = item.id;
+    dispatch(allActions.deleteAsyncData(id));
+    history.go(0);
   };
 
   return (

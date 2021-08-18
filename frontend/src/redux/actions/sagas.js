@@ -1,5 +1,5 @@
-import { put, takeEvery, all, call } from 'redux-saga/effects';
-import { getList, getDetail } from '../../lib/api/post';
+import { put, takeEvery, all, call, take } from 'redux-saga/effects';
+import { getList, getDetail, deletePost } from '../../lib/api/post';
 import { Types } from '../actions/allActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数
@@ -42,8 +42,25 @@ function* getAsyncDetailDataWatcher() {
   yield takeEvery(Types.GET_ASYNC_DETAIL_DATA, runDetailAction);
 }
 
+// 削除
+function* deleteAsyncData({ id }) {
+  yield call(deletePost, id);
+  yield call(getList);
+}
+
+function* deleteAsyncDataWatcher() {
+  const action = yield take(Types.DELETE_ASYNC_DATA);
+  yield call(deleteAsyncData, {
+    id: action.payload.id,
+  });
+}
+
 // rootSagaでsagaの処理を配列で管理する
 // allはPromiseAllと同様の処理
 export default function* rootSaga() {
-  yield all([getAsyncListDataWatcher(), getAsyncDetailDataWatcher()]);
+  yield all([
+    getAsyncListDataWatcher(),
+    getAsyncDetailDataWatcher(),
+    deleteAsyncDataWatcher(),
+  ]);
 }
