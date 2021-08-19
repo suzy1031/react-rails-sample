@@ -31,7 +31,7 @@ const Edit = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const params = generateParams();
