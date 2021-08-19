@@ -81,7 +81,8 @@ function* postAsyncData() {
 // 更新
 function* updateAsyncData({ id, payload }) {
   yield call(updatePost, id, payload);
-  yield call(getList);
+  const result = yield call(getList);
+  yield put({ type: Types.SET_DATA, payload: result.data });
 }
 
 function* patchAsyncData() {
