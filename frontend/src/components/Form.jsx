@@ -39,7 +39,7 @@ const Form = (props) => {
           type='text'
           name='name'
           onChange={(e) => handleChange(e)}
-          value={value.name}
+          value={value?.name}
         />
         <TextField
           id='nekoType'
@@ -47,7 +47,7 @@ const Form = (props) => {
           type='text'
           name='nekoType'
           onChange={(e) => handleChange(e)}
-          value={value.nekoType}
+          value={value?.nekoType}
         />
         <TextField
           id='favoriteFood'
@@ -55,7 +55,7 @@ const Form = (props) => {
           type='text'
           name='favoriteFood'
           onChange={(e) => handleChange(e)}
-          value={value.favoriteFood}
+          value={value?.favoriteFood}
         />
         <TextField
           id='favoriteToy'
@@ -63,7 +63,7 @@ const Form = (props) => {
           type='text'
           name='favoriteToy'
           onChange={(e) => handleChange(e)}
-          value={value.favoriteToy}
+          value={value?.favoriteToy}
         />
       </form>
     </>
