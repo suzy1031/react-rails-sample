@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import FormBody from './Form';
-import { createPost } from '../lib/api/post';
 import { useHistory } from 'react-router-dom';
+// redux
+import { useDispatch } from 'react-redux';
+import allActions from '../redux/actions/allActions';
 
 const New = () => {
+  const dispatch = useDispatch();
   const [value, setValue] = useState({});
   const history = useHistory();
 
@@ -14,18 +17,13 @@ const New = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log(value);
 
     const params = generateParams();
-    try {
-      const res = await createPost(params);
-      console.log(res);
-      history.push('/');
-    } catch (e) {
-      console.log(e.response);
-    }
+    dispatch(allActions.postAsyncData(params));
+    history.push('/');
   };
 
   const generateParams = () => {
