@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { updatePost, getDetail } from '../lib/api/post';
 import FormBody from './Form';
+// redux
+import { useSelector, useDispatch } from 'react-redux';
+import allActions from '../redux/actions/allActions';
 
 const Edit = () => {
+  const dispatch = useDispatch();
+  const asyncData = useSelector((state) => state.asyncDetailData).payload;
   const [value, setValue] = useState({
     name: '',
     nekoType: '',
-    // 追加
     favoriteFood: '',
-    // 追加
     favoriteToy: '',
   });
 
@@ -18,23 +20,9 @@ const Edit = () => {
   const history = useHistory();
 
   useEffect(() => {
-    handleGetData(query);
-  }, [query]);
-
-  const handleGetData = async (query) => {
-    try {
-      const res = await getDetail(query.id);
-      console.log(res.data);
-      setValue({
-        name: res.data.name,
-        nekoType: res.data.nekoType,
-        favoriteFood: res.data.detailInfo.favoriteFood,
-        favoriteToy: res.data.detailInfo.favoriteToy,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+    const id = query.id;
+    dispatch(allActions.getAsyncDetailData(id));
+  }, []);
 
   const handleChange = (e) => {
     setValue({
@@ -47,22 +35,18 @@ const Edit = () => {
     e.preventDefault();
 
     const params = generateParams();
-    try {
-      const res = await updatePost(query.id, params);
-      console.log(res);
-      history.push('/');
-    } catch (e) {
-      console.log(e.response);
-    }
+    const id = query.id;
+    dispatch(allActions.patchAsyncData(id, params));
+    history.push('/');
   };
 
   const generateParams = () => {
     const params = {
-      name: value.name,
-      nekoType: value.nekoType,
+      name: value.name || asyncData.name,
+      nekoType: value.nekoType || asyncData.nekoType,
       detailInfo: {
-        favoriteFood: value.favoriteFood,
-        favoriteToy: value.favoriteToy,
+        favoriteFood: value.favoriteFood || asyncData.detailInfo.favoriteFood,
+        favoriteToy: value.favoriteToy || asyncData.detailInfo.favoriteToy,
       },
     };
     return params;
@@ -74,7 +58,18 @@ const Edit = () => {
       <FormBody
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        value={value}
+        name={value.name ? value.name : asyncData?.name}
+        nekoType={value.nekoType ? value.nekoType : asyncData?.nekoType}
+        favoriteFood={
+          value.favoriteFood
+            ? value.favoriteFood
+            : asyncData?.detailInfo.favoriteFood
+        }
+        favoriteToy={
+          value.favoriteToy
+            ? value.favoriteToy
+            : asyncData?.detailInfo.favoriteToy
+        }
         buttonType='更新'
       />
     </>
