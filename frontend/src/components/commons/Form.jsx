@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import SpaceRow from './commons/SpaceRow';
+import SpaceRow from '../layout/SpaceRow';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField } from '@material-ui/core';
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import SpaceRow from './commons/SpaceRow';
+import SpaceRow from '../layout/SpaceRow';
 // style
 import {
   Button,
@@ -14,7 +14,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../redux/actions/allActions';
+import allActions from '../../redux/actions/allActions';
 
 const useStyles = makeStyles({
   table: {

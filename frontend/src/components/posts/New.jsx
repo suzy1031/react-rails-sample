@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import FormBody from './Form';
+import FormBody from '../commons/Form';
 import { useHistory } from 'react-router-dom';
 // redux
 import { useDispatch } from 'react-redux';
-import allActions from '../redux/actions/allActions';
+import allActions from '../../redux/actions/allActions';
 
 const New = () => {
   const dispatch = useDispatch();

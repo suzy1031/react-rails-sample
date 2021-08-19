@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 // style
 import { Button } from '@material-ui/core';
 // component
-import ListTable from './commons/ListTable';
-import SpaceRow from './commons/SpaceRow';
+import ListTable from '../commons/ListTable';
+import SpaceRow from '../layout/SpaceRow';
 // context
-import { AuthContext } from '../App';
+import { AuthContext } from '../../App';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../redux/actions/allActions';
+import allActions from '../../redux/actions/allActions';
 
 const List = () => {
   const dispatch = useDispatch();

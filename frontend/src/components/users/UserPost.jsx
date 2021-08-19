@@ -8,7 +8,7 @@ import { deletePost } from '../../lib/api/post';
 // context
 import { AuthContext } from '../../App';
 // component
-import SpaceRow from '../commons/SpaceRow';
+import SpaceRow from '../layout/SpaceRow';
 import ListTable from '../commons/ListTable';
 
 const UserPost = () => {

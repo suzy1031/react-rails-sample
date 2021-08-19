@@ -7,10 +7,10 @@ import {
 } from 'react-router-dom';
 import Cookies from 'js-cookie';
 // component
-import List from './components/List';
-import New from './components/New';
-import Detail from './components/Detail';
-import Edit from './components/Edit';
+import List from './components/posts/List';
+import New from './components/posts/New';
+import Detail from './components/posts/Detail';
+import Edit from './components/posts/Edit';
 import Header from './components/commons/Header';
 import SignUp from './components/users/SignUp';
 import SignIn from './components/users/SignIn';
