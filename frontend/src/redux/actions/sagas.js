@@ -58,7 +58,6 @@ function* getAsyncDetailDataWatcher() {
 // 削除
 function* deleteAsyncData({ id }) {
   yield call(deletePost, id);
-  yield call(getList);
 }
 
 function* deleteAsyncDataWatcher() {
@@ -71,7 +70,8 @@ function* deleteAsyncDataWatcher() {
 // 新規作成
 function* createAsyncData({ payload }) {
   yield call(createPost, payload);
-  yield call(getList);
+  const result = yield call(getList);
+  yield put({ type: Types.SET_DATA, payload: result.data });
 }
 
 function* postAsyncData() {
