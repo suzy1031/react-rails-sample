@@ -5,6 +5,8 @@ export const Types = {
   GET_ASYNC_LIST_DATA: 'GET_ASYNC_LIST_DATA',
   GET_ASYNC_DETAIL_DATA: 'GET_ASYNC_DETAIL_DATA',
   DELETE_ASYNC_DATA: 'DELETE_ASYNC_DATA',
+  POST_ASYNC_DATA: 'POST_ASYNC_DATA',
+  PATCH_ASYNC_DATA: 'PATCH_ASYNC_DATA',
 };
 
 const getAsyncListData = () => {
@@ -29,4 +31,29 @@ const deleteAsyncData = (id) => {
   };
 };
 
-export default { getAsyncListData, getAsyncDetailData, deleteAsyncData };
+const postAsyncData = (params) => {
+  return {
+    type: Types.POST_ASYNC_DATA,
+    payload: {
+      ...params,
+    },
+  };
+};
+
+const patchAsyncData = (id, params) => {
+  return {
+    type: Types.PATCH_ASYNC_DATA,
+    id: id,
+    payload: {
+      ...params,
+    },
+  };
+};
+
+export default {
+  getAsyncListData,
+  getAsyncDetailData,
+  deleteAsyncData,
+  postAsyncData,
+  patchAsyncData,
+};

@@ -1,5 +1,18 @@
-import { put, takeEvery, all, call, take } from 'redux-saga/effects';
-import { getList, getDetail, deletePost } from '../../lib/api/post';
+import {
+  put,
+  takeEvery,
+  all,
+  call,
+  take,
+  takeLatest,
+} from 'redux-saga/effects';
+import {
+  getList,
+  getDetail,
+  deletePost,
+  createPost,
+  updatePost,
+} from '../../lib/api/post';
 import { Types } from '../actions/allActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数
@@ -55,6 +68,26 @@ function* deleteAsyncDataWatcher() {
   });
 }
 
+// 新規作成
+function* createAsyncData({ payload }) {
+  yield call(createPost, payload);
+  yield call(getList);
+}
+
+function* postAsyncData() {
+  yield takeLatest(Types.POST_ASYNC_DATA, createAsyncData);
+}
+
+// 更新
+function* updateAsyncData({ id, payload }) {
+  yield call(updatePost, id, payload);
+  yield call(getList);
+}
+
+function* patchAsyncData() {
+  yield takeLatest(Types.PATCH_ASYNC_DATA, updateAsyncData);
+}
+
 // rootSagaでsagaの処理を配列で管理する
 // allはPromiseAllと同様の処理
 export default function* rootSaga() {
@@ -62,5 +95,7 @@ export default function* rootSaga() {
     getAsyncListDataWatcher(),
     getAsyncDetailDataWatcher(),
     deleteAsyncDataWatcher(),
+    postAsyncData(),
+    patchAsyncData(),
   ]);
 }
