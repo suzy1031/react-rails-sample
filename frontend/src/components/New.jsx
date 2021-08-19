@@ -7,7 +7,12 @@ import allActions from '../redux/actions/allActions';
 
 const New = () => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState({});
+  const [value, setValue] = useState({
+    name: '',
+    nekoType: '',
+    favoriteFood: '',
+    favoriteToy: '',
+  });
   const history = useHistory();
 
   const handleChange = (e) => {
@@ -44,7 +49,10 @@ const New = () => {
       <FormBody
         handleChange={handleChange}
         handleSubmit={handleSubmit}
-        value={value}
+        name={value.name}
+        nekoType={value.nekoType}
+        favoriteFood={value.favoriteFood}
+        favoriteToy={value.favoriteToy}
         buttonType='登録'
       />
     </>
