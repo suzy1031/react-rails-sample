@@ -16,7 +16,15 @@ const useStyles = makeStyles((theme) => ({
 const Form = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { handleChange, handleSubmit, value, buttonType } = props;
+  const {
+    handleChange,
+    handleSubmit,
+    name,
+    nekoType,
+    favoriteFood,
+    favoriteToy,
+    buttonType,
+  } = props;
   return (
     <>
       <Button
@@ -39,7 +47,7 @@ const Form = (props) => {
           type='text'
           name='name'
           onChange={(e) => handleChange(e)}
-          value={value?.name}
+          value={name}
         />
         <TextField
           id='nekoType'
@@ -47,7 +55,7 @@ const Form = (props) => {
           type='text'
           name='nekoType'
           onChange={(e) => handleChange(e)}
-          value={value?.nekoType}
+          value={nekoType}
         />
         <TextField
           id='favoriteFood'
@@ -55,7 +63,7 @@ const Form = (props) => {
           type='text'
           name='favoriteFood'
           onChange={(e) => handleChange(e)}
-          value={value?.favoriteFood}
+          value={favoriteFood}
         />
         <TextField
           id='favoriteToy'
@@ -63,7 +71,7 @@ const Form = (props) => {
           type='text'
           name='favoriteToy'
           onChange={(e) => handleChange(e)}
-          value={value?.favoriteToy}
+          value={favoriteToy}
         />
       </form>
     </>
