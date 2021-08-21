@@ -13,6 +13,7 @@ import {
   createPost,
   updatePost,
 } from '../../lib/api/post';
+import { getCurrentUser } from '../../lib/api/auth';
 import { Types } from '../actions/allActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数
@@ -33,6 +34,14 @@ import { Types } from '../actions/allActions';
 // 5. put(actionをdispatchするとき)
 // 例) APIから受け取ったdataで更新するとき
 // 例) error処理を行うとき
+
+const runUserAction = function* () {
+  const result = yield call(getCurrentUser);
+  yield put({ type: Types.SET_USER_DATA, payload: result.data });
+};
+function* getAsyncUserDataWatcher() {
+  yield takeEvery(Types.GET_ASYNC_CURRENT_USER, runUserAction);
+}
 
 // 一覧
 // function* => generator関数(ECMAScript6)
@@ -93,6 +102,7 @@ function* patchAsyncData() {
 // allはPromiseAllと同様の処理
 export default function* rootSaga() {
   yield all([
+    getAsyncUserDataWatcher(),
     getAsyncListDataWatcher(),
     getAsyncDetailDataWatcher(),
     deleteAsyncDataWatcher(),

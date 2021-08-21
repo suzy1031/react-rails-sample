@@ -7,6 +7,7 @@ import rootSaga from '../actions/sagas';
 const initialState = {
   asyncListData: '',
   asyncDetailData: '',
+  asyncCurrentUser: '',
 };
 // redux-sagaはreduxのmiddlewareになるのでcreateStoreに設定する
 const sagaMiddleware = createSagaMiddleware();
