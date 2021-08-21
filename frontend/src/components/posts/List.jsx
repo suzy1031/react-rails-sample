@@ -1,12 +1,10 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 // style
 import { Button } from '@material-ui/core';
 // component
 import ListTable from '../commons/ListTable';
 import SpaceRow from '../layout/SpaceRow';
-// context
-import { AuthContext } from '../../App';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../../redux/actions/allActions';
@@ -14,10 +12,13 @@ import allActions from '../../redux/actions/allActions';
 const List = () => {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.asyncListData).payload;
-  const { currentUser } = useContext(AuthContext);
+  const asyncCurrentUser = useSelector(
+    (state) => state.asyncCurrentUser
+  ).payload;
 
   useEffect(() => {
     dispatch(allActions.getAsyncListData());
+    dispatch(allActions.getAsyncCurrentUser());
   }, []);
 
   const history = useHistory();
@@ -42,7 +43,7 @@ const List = () => {
       <ListTable
         dataList={postList}
         handleDelete={handleDelete}
-        currentUser={currentUser}
+        currentUser={asyncCurrentUser?.data}
       />
     </>
   );
