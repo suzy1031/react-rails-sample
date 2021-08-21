@@ -1,9 +1,16 @@
 import { Types } from '../actions/allActions';
 
-const asyncCurrentUser = (state = '', action) => {
+const defaultState = {
+  payload: {},
+  loading: true,
+};
+
+const asyncCurrentUser = (state = defaultState, action) => {
   switch (action.type) {
+    case Types.FETCH_USER_DATA:
+      return { ...state, loading: true };
     case Types.SET_USER_DATA:
-      return { ...state, payload: action.payload };
+      return { ...state, payload: action.payload, loading: false };
     default:
       return state;
   }

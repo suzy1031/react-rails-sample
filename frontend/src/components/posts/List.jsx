@@ -12,9 +12,7 @@ import allActions from '../../redux/actions/allActions';
 const List = () => {
   const dispatch = useDispatch();
   const postList = useSelector((state) => state.asyncListData).payload;
-  const asyncCurrentUser = useSelector(
-    (state) => state.asyncCurrentUser
-  ).payload;
+  const asyncCurrentUser = useSelector((state) => state.asyncCurrentUser);
 
   useEffect(() => {
     dispatch(allActions.getAsyncListData());
@@ -43,7 +41,7 @@ const List = () => {
       <ListTable
         dataList={postList}
         handleDelete={handleDelete}
-        currentUser={asyncCurrentUser?.data}
+        currentUser={asyncCurrentUser?.payload?.data}
       />
     </>
   );

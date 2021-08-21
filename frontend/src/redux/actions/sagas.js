@@ -36,8 +36,14 @@ import { Types } from '../actions/allActions';
 // 例) error処理を行うとき
 
 const runUserAction = function* () {
+  yield put({
+    type: Types.FETCH_USER_DATA,
+  });
   const result = yield call(getCurrentUser);
-  yield put({ type: Types.SET_USER_DATA, payload: result.data });
+  yield put({
+    type: Types.SET_USER_DATA,
+    payload: result.data,
+  });
 };
 function* getAsyncUserDataWatcher() {
   yield takeEvery(Types.GET_ASYNC_CURRENT_USER, runUserAction);
