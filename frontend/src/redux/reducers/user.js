@@ -16,4 +16,13 @@ const asyncCurrentUser = (state = defaultState, action) => {
   }
 };
 
-export { asyncCurrentUser };
+const asyncUserPostsData = (state = '', action) => {
+  switch (action.type) {
+    case Types.SET_USER_POST_DATA:
+      return { ...state, payload: action.payload };
+    default:
+      return state;
+  }
+};
+
+export { asyncCurrentUser, asyncUserPostsData };

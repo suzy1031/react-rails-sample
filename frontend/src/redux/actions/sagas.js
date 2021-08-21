@@ -14,6 +14,7 @@ import {
   updatePost,
 } from '../../lib/api/post';
 import { getCurrentUser } from '../../lib/api/auth';
+import { getUserPosts } from '../../lib/api/user';
 import { Types } from '../actions/allActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数
@@ -35,6 +36,7 @@ import { Types } from '../actions/allActions';
 // 例) APIから受け取ったdataで更新するとき
 // 例) error処理を行うとき
 
+// ログインユーザー情報
 const runUserAction = function* () {
   yield put({
     type: Types.FETCH_USER_DATA,
@@ -47,6 +49,15 @@ const runUserAction = function* () {
 };
 function* getAsyncUserDataWatcher() {
   yield takeEvery(Types.GET_ASYNC_CURRENT_USER, runUserAction);
+}
+
+// ユーザー投稿一覧
+const runUserPostsAction = function* (arg) {
+  const result = yield call(getUserPosts, arg.id);
+  yield put({ type: Types.SET_USER_POST_DATA, payload: result.data });
+};
+function* getAsyncUserPostsDataWatcher() {
+  yield takeEvery(Types.GET_ASYNC_USER_POST_DATA, runUserPostsAction);
 }
 
 // 一覧
@@ -109,6 +120,7 @@ function* patchAsyncData() {
 export default function* rootSaga() {
   yield all([
     getAsyncUserDataWatcher(),
+    getAsyncUserPostsDataWatcher(),
     getAsyncListDataWatcher(),
     getAsyncDetailDataWatcher(),
     deleteAsyncDataWatcher(),

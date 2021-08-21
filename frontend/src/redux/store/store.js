@@ -8,6 +8,7 @@ const initialState = {
   asyncListData: '',
   asyncDetailData: '',
   asyncCurrentUser: '',
+  asyncUserPostsData: '',
 };
 // redux-sagaはreduxのmiddlewareになるのでcreateStoreに設定する
 const sagaMiddleware = createSagaMiddleware();
