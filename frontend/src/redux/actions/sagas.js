@@ -16,6 +16,7 @@ import {
 import { getCurrentUser } from '../../lib/api/auth';
 import { getUserPosts } from '../../lib/api/user';
 import { Types } from '../actions/allActions';
+import { userTypes } from './userActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数
 
@@ -39,25 +40,25 @@ import { Types } from '../actions/allActions';
 // ログインユーザー情報
 const runUserAction = function* () {
   yield put({
-    type: Types.FETCH_USER_DATA,
+    type: userTypes.FETCH_USER_DATA,
   });
   const result = yield call(getCurrentUser);
   yield put({
-    type: Types.SET_USER_DATA,
+    type: userTypes.SET_USER_DATA,
     payload: result.data,
   });
 };
 function* getAsyncUserDataWatcher() {
-  yield takeEvery(Types.GET_ASYNC_CURRENT_USER, runUserAction);
+  yield takeEvery(userTypes.GET_ASYNC_CURRENT_USER, runUserAction);
 }
 
 // ユーザー投稿一覧
 const runUserPostsAction = function* (arg) {
   const result = yield call(getUserPosts, arg.id);
-  yield put({ type: Types.SET_USER_POST_DATA, payload: result.data });
+  yield put({ type: userTypes.SET_USER_POST_DATA, payload: result.data });
 };
 function* getAsyncUserPostsDataWatcher() {
-  yield takeEvery(Types.GET_ASYNC_USER_POST_DATA, runUserPostsAction);
+  yield takeEvery(userTypes.GET_ASYNC_USER_POST_DATA, runUserPostsAction);
 }
 
 // 一覧

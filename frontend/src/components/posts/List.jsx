@@ -8,6 +8,7 @@ import SpaceRow from '../layout/SpaceRow';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
 import allActions from '../../redux/actions/allActions';
+import userActions from '../../redux/actions/userActions';
 
 const List = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const List = () => {
 
   useEffect(() => {
     dispatch(allActions.getAsyncListData());
-    dispatch(allActions.getAsyncCurrentUser());
+    dispatch(userActions.getAsyncCurrentUser());
   }, []);
 
   const history = useHistory();

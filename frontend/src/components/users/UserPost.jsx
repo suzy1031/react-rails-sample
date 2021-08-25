@@ -7,7 +7,7 @@ import SpaceRow from '../layout/SpaceRow';
 import ListTable from '../commons/ListTable';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../../redux/actions/allActions';
+import userActions from '../../redux/actions/userActions';
 
 const UserPost = () => {
   const dispatch = useDispatch();
@@ -20,9 +20,9 @@ const UserPost = () => {
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(allActions.getAsyncCurrentUser());
+    dispatch(userActions.getAsyncCurrentUser());
     if (asyncCurrentUser?.data.id) {
-      dispatch(allActions.getAsyncUserPostsData(asyncCurrentUser?.data.id));
+      dispatch(userActions.getAsyncUserPostsData(asyncCurrentUser?.data.id));
     } else {
       <Redirect to='/signin' />;
     }
@@ -30,7 +30,7 @@ const UserPost = () => {
 
   const handleDelete = async (item) => {
     const id = item.id;
-    dispatch(allActions.deleteAsyncData(id));
+    dispatch(userActions.deleteAsyncData(id));
     history.go(0);
   };
 

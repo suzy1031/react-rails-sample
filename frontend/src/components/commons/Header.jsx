@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 // style
@@ -17,6 +17,9 @@ import { signOut } from '../../lib/api/auth';
 import { AuthContext } from '../../App';
 // component
 import HeaderDrawer from './HeaderDrawer';
+// redux
+import { useSelector, useDispatch } from 'react-redux';
+import userActions from '../../redux/actions/userActions';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -42,8 +45,16 @@ const drawerItem = [
 ];
 
 const Header = () => {
-  const { loading, isSignedIn, setIsSignedIn, currentUser } =
-    useContext(AuthContext);
+  const dispatch = useDispatch();
+  const asyncCurrentUser = useSelector(
+    (state) => state.asyncCurrentUser
+  ).payload;
+
+  useEffect(() => {
+    dispatch(userActions.getAsyncCurrentUser());
+  }, []);
+
+  const { setIsSignedIn } = useContext(AuthContext);
   const classes = useStyles();
   const history = useHistory();
 
@@ -68,41 +79,37 @@ const Header = () => {
   };
 
   const AuthButtons = () => {
-    if (!loading) {
-      if (isSignedIn) {
-        return (
+    if (asyncCurrentUser?.isLogin) {
+      return (
+        <Button
+          color='inherit'
+          className={classes.linkBtn}
+          onClick={handleSignOut}
+        >
+          Sign out
+        </Button>
+      );
+    } else {
+      return (
+        <>
           <Button
+            component={Link}
+            to='/signin'
             color='inherit'
             className={classes.linkBtn}
-            onClick={handleSignOut}
           >
-            Sign out
+            Sign in
           </Button>
-        );
-      } else {
-        return (
-          <>
-            <Button
-              component={Link}
-              to='/signin'
-              color='inherit'
-              className={classes.linkBtn}
-            >
-              Sign in
-            </Button>
-            <Button
-              component={Link}
-              to='/signup'
-              color='inherit'
-              className={classes.linkBtn}
-            >
-              Sign Up
-            </Button>
-          </>
-        );
-      }
-    } else {
-      return <></>;
+          <Button
+            component={Link}
+            to='/signup'
+            color='inherit'
+            className={classes.linkBtn}
+          >
+            Sign Up
+          </Button>
+        </>
+      );
     }
   };
 
@@ -117,7 +124,7 @@ const Header = () => {
       <div className={classes.root}>
         <AppBar position='static'>
           <Toolbar>
-            {isSignedIn && currentUser && (
+            {asyncCurrentUser?.isLogin && (
               <IconButton
                 edge='start'
                 className={classes.menuButton}

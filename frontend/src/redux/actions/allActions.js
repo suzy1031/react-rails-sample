@@ -7,26 +7,6 @@ export const Types = {
   DELETE_ASYNC_DATA: 'DELETE_ASYNC_DATA',
   POST_ASYNC_DATA: 'POST_ASYNC_DATA',
   PATCH_ASYNC_DATA: 'PATCH_ASYNC_DATA',
-
-  FETCH_USER_DATA: 'FETCH_USER_DATA',
-  SET_USER_DATA: 'SET_USER_DATA',
-  GET_ASYNC_CURRENT_USER: 'GET_ASYNC_CURRENT_USER',
-  FETCH_USER_POST_DATA: 'FETCH_USER_POST_DATA',
-  SET_USER_POST_DATA: 'SET_USER_POST_DATA',
-  GET_ASYNC_USER_POST_DATA: 'GET_ASYNC_USER_POST_DATA',
-};
-
-const getAsyncCurrentUser = () => {
-  return {
-    type: Types.GET_ASYNC_CURRENT_USER,
-  };
-};
-
-const getAsyncUserPostsData = (id) => {
-  return {
-    id: id,
-    type: Types.GET_ASYNC_USER_POST_DATA,
-  };
 };
 
 const getAsyncListData = () => {
@@ -71,8 +51,6 @@ const patchAsyncData = (id, params) => {
 };
 
 export default {
-  getAsyncCurrentUser,
-  getAsyncUserPostsData,
   getAsyncListData,
   getAsyncDetailData,
   deleteAsyncData,
