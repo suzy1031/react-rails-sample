@@ -7,7 +7,7 @@ import ListTable from '../commons/ListTable';
 import SpaceRow from '../layout/SpaceRow';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../../redux/actions/allActions';
+import postActions from '../../redux/actions/postActions';
 import userActions from '../../redux/actions/userActions';
 
 const List = () => {
@@ -16,7 +16,7 @@ const List = () => {
   const asyncCurrentUser = useSelector((state) => state.asyncCurrentUser);
 
   useEffect(() => {
-    dispatch(allActions.getAsyncListData());
+    dispatch(postActions.getAsyncListData());
     dispatch(userActions.getAsyncCurrentUser());
   }, []);
 
@@ -24,7 +24,7 @@ const List = () => {
 
   const handleDelete = async (item) => {
     const id = item.id;
-    dispatch(allActions.deleteAsyncData(id));
+    dispatch(postActions.deleteAsyncData(id));
     history.go(0);
   };
 

@@ -1,4 +1,4 @@
-import { Types } from '../actions/allActions';
+import { Types } from '../actions/postActions';
 
 // 一覧
 const asyncListData = (state = '', action) => {

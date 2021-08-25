@@ -14,7 +14,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../../redux/actions/allActions';
+import postActions from '../../redux/actions/postActions';
 
 const useStyles = makeStyles({
   table: {
@@ -36,7 +36,7 @@ const Detail = () => {
 
   useEffect(() => {
     const id = query.id;
-    dispatch(allActions.getAsyncDetailData(id));
+    dispatch(postActions.getAsyncDetailData(id));
   }, []);
 
   return (

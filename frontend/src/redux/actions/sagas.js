@@ -15,7 +15,7 @@ import {
 } from '../../lib/api/post';
 import { getCurrentUser } from '../../lib/api/auth';
 import { getUserPosts } from '../../lib/api/user';
-import { Types } from '../actions/allActions';
+import { Types } from './postActions';
 import { userTypes } from './userActions';
 
 // redux-sagaには非同期処理を行う上で使用する関数

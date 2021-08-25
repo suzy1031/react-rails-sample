@@ -3,7 +3,7 @@ import FormBody from '../commons/Form';
 import { useHistory } from 'react-router-dom';
 // redux
 import { useDispatch } from 'react-redux';
-import allActions from '../../redux/actions/allActions';
+import postActions from '../../redux/actions/postActions';
 
 const New = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const New = () => {
     console.log(value);
 
     const params = generateParams();
-    dispatch(allActions.postAsyncData(params));
+    dispatch(postActions.postAsyncData(params));
     history.push('/');
   };
 

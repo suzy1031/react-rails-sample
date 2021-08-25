@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import FormBody from '../commons/Form';
 // redux
 import { useSelector, useDispatch } from 'react-redux';
-import allActions from '../../redux/actions/allActions';
+import postActions from '../../redux/actions/postActions';
 
 const Edit = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const Edit = () => {
 
   useEffect(() => {
     const id = query.id;
-    dispatch(allActions.getAsyncDetailData(id));
+    dispatch(postActions.getAsyncDetailData(id));
   }, []);
 
   const handleChange = (e) => {
@@ -36,7 +36,7 @@ const Edit = () => {
 
     const params = generateParams();
     const id = query.id;
-    dispatch(allActions.patchAsyncData(id, params));
+    dispatch(postActions.patchAsyncData(id, params));
     history.push('/');
   };
 
