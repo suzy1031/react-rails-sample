@@ -63,7 +63,7 @@ const ListTable = (props) => {
               <TableCell align='center'>
                 {subString(item.detailInfo.favoriteToy, 10)}
               </TableCell>
-              {currentUser.id === item.userId ? (
+              {currentUser?.id === item.userId ? (
                 <TableCell align='center'>
                   <Link to={`/edit/${item.id}`}>更新</Link>
                 </TableCell>
@@ -73,7 +73,7 @@ const ListTable = (props) => {
               <TableCell align='center'>
                 <Link to={`/post/${item.id}`}>詳細へ</Link>
               </TableCell>
-              {currentUser.id === item.userId ? (
+              {currentUser?.id === item.userId ? (
                 <TableCell align='center'>
                   <Button
                     variant='contained'
