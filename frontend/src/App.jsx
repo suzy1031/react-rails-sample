@@ -28,7 +28,6 @@ export const AuthContext = createContext();
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
 
   const handleGetCurrentUser = async () => {
     try {
@@ -36,7 +35,6 @@ const App = () => {
 
       if (res?.data.isLogin === true) {
         setIsSignedIn(true);
-        setCurrentUser(res?.data.data);
       } else {
         console.log('no current user');
         // token有効期限が切れている場合、古いcookieを全て削除
@@ -53,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     handleGetCurrentUser();
-  }, [setCurrentUser]);
+  }, []);
 
   const Private = ({ children }) => {
     if (!loading) {
@@ -77,8 +75,6 @@ const App = () => {
               setLoading,
               isSignedIn,
               setIsSignedIn,
-              currentUser,
-              setCurrentUser,
             }}
           >
             <CssBaseline />
@@ -94,7 +90,6 @@ const App = () => {
                     <Route path='/post/:id' component={Detail} />
                     <Route exact path='/new' component={New} />
                     <Route path='/edit/:id' component={Edit} />
-                    {/* 追加 */}
                     <Route exact path='/user/posts' component={UserPost} />
                   </Private>
                 </Switch>
