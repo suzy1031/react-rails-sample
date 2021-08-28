@@ -6,6 +6,7 @@ import {
   take,
   takeLatest,
 } from 'redux-saga/effects';
+// api
 import {
   getList,
   getDetail,
@@ -15,6 +16,7 @@ import {
 } from '../../lib/api/post';
 import { getCurrentUser } from '../../lib/api/auth';
 import { getUserPosts } from '../../lib/api/user';
+import { signIn } from '../../lib/api/auth';
 import { Types } from './postActions';
 import { userTypes } from './userActions';
 
@@ -37,16 +39,34 @@ import { userTypes } from './userActions';
 // 例) APIから受け取ったdataで更新するとき
 // 例) error処理を行うとき
 
+// ログイン
+const runSignIn = function* ({ payload }) {
+  const result = yield call(signIn, payload);
+  yield put({
+    type: userTypes.SET_SIGN_IN,
+    payload: result,
+    status: result.status,
+    headers: result.headers,
+  });
+};
+
+function* signInWatcher() {
+  yield takeEvery(userTypes.POST_SIGN_IN_DATA, runSignIn);
+}
+
 // ログインユーザー情報
 const runUserAction = function* () {
   yield put({
     type: userTypes.FETCH_USER_DATA,
   });
   const result = yield call(getCurrentUser);
-  yield put({
-    type: userTypes.SET_USER_DATA,
-    payload: result.data,
-  });
+
+  if (result) {
+    yield put({
+      type: userTypes.SET_USER_DATA,
+      payload: result.data,
+    });
+  }
 };
 function* getAsyncUserDataWatcher() {
   yield takeEvery(userTypes.GET_ASYNC_CURRENT_USER, runUserAction);
@@ -120,6 +140,7 @@ function* patchAsyncData() {
 // allはPromiseAllと同様の処理
 export default function* rootSaga() {
   yield all([
+    signInWatcher(),
     getAsyncUserDataWatcher(),
     getAsyncUserPostsDataWatcher(),
     getAsyncListDataWatcher(),

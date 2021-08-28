@@ -3,40 +3,37 @@ import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
 // context
 import { AuthContext } from '../../App';
-// api
-import { signIn } from '../../lib/api/auth';
 // component
 import SignForm from './SignForm';
+// redux
+import { useSelector, useDispatch } from 'react-redux';
+import userActions from '../../redux/actions/userActions';
 
 const SignIn = () => {
+  const { setIsSignedIn } = useContext(AuthContext);
   const history = useHistory();
-
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const response = useSelector((state) => state.asyncSignIn);
+  if (response != undefined) {
+    if (response.status === 200) {
+      console.log('start set cookies');
+      Cookies.set('_access_token', response.headers['access-token']);
+      Cookies.set('_client', response.headers['client']);
+      Cookies.set('_uid', response.headers['uid']);
+      setIsSignedIn(true);
+      console.log('finish set cookies');
+      history.push('/');
+    }
+  }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const signInHandleSubmit = async (e) => {
+  const signInHandleSubmit = (e) => {
     e.preventDefault();
 
     const params = generateParams();
-
-    try {
-      const res = await signIn(params);
-
-      if (res.status === 200) {
-        Cookies.set('_access_token', res.headers['access-token']);
-        Cookies.set('_client', res.headers['client']);
-        Cookies.set('_uid', res.headers['uid']);
-
-        setIsSignedIn(true);
-        setCurrentUser(res.data.data);
-
-        history.push('/');
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    dispatch(userActions.postAsyncSignIn(params));
   };
 
   const generateParams = () => {
