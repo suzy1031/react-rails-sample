@@ -1,8 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
-// context
-import { AuthContext } from '../../App';
 // component
 import SignForm from './SignForm';
 // redux
@@ -10,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import userActions from '../../redux/actions/userActions';
 
 const SignIn = () => {
-  const { setIsSignedIn } = useContext(AuthContext);
   const history = useHistory();
   const dispatch = useDispatch();
   const response = useSelector((state) => state.asyncSignIn);
@@ -20,7 +17,6 @@ const SignIn = () => {
       Cookies.set('_access_token', response.headers['access-token']);
       Cookies.set('_client', response.headers['client']);
       Cookies.set('_uid', response.headers['uid']);
-      setIsSignedIn(true);
       console.log('finish set cookies');
       history.push('/');
     }

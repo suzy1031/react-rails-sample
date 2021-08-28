@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 // style
@@ -13,8 +13,6 @@ import {
 import MenuIcon from '@material-ui/icons/Menu';
 // api
 import { signOut } from '../../lib/api/auth';
-// context
-import { AuthContext } from '../../App';
 // component
 import HeaderDrawer from './HeaderDrawer';
 // redux
@@ -54,7 +52,6 @@ const Header = () => {
     dispatch(userActions.getAsyncCurrentUser());
   }, []);
 
-  const { setIsSignedIn } = useContext(AuthContext);
   const classes = useStyles();
   const history = useHistory();
 
@@ -67,8 +64,7 @@ const Header = () => {
         Cookies.remove('_client');
         Cookies.remove('_uid');
 
-        setIsSignedIn(false);
-        history.push('/signin');
+        history.go(0);
         console.log('succeeded in sign out');
       } else {
         console.log('failed in sign out');

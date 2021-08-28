@@ -1,8 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Cookies from 'js-cookie';
-// context
-import { AuthContext } from '../../App';
 // api
 import { signUp } from '../../lib/api/auth';
 // component
@@ -10,9 +8,6 @@ import SignForm from './SignForm';
 
 const SignUp = () => {
   const history = useHistory();
-
-  const { setIsSignedIn, setCurrentUser } = useContext(AuthContext);
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,9 +26,6 @@ const SignUp = () => {
         Cookies.set('_access_token', res.headers['access-token']);
         Cookies.set('_client', res.headers['client']);
         Cookies.set('_uid', res.headers['uid']);
-
-        setIsSignedIn(true);
-        setCurrentUser(res.data.data);
 
         history.push('/');
         console.log('signed in successfully');
