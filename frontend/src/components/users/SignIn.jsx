@@ -11,7 +11,7 @@ const SignIn = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const response = useSelector((state) => state.asyncSignIn);
-  if (response != undefined) {
+  if (response !== undefined) {
     if (response.status === 200) {
       console.log('start set cookies');
       Cookies.set('_access_token', response.headers['access-token']);
