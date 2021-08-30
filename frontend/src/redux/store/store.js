@@ -11,6 +11,7 @@ const initialState = {
   asyncCurrentUser: '',
   asyncUserPostsData: '',
   asyncSignIn: '',
+  asyncSignUp: '',
 };
 // redux-sagaはreduxのmiddlewareになるのでcreateStoreに設定する
 const sagaMiddleware = createSagaMiddleware();

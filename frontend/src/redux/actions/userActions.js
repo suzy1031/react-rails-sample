@@ -7,6 +7,8 @@ export const userTypes = {
   GET_ASYNC_USER_POST_DATA: 'GET_ASYNC_USER_POST_DATA',
   SET_SIGN_IN: 'SET_SIGN_IN',
   POST_SIGN_IN_DATA: 'POST_SIGN_IN_DATA',
+  SET_SIGN_UP: 'SET_SIGN_UP',
+  POST_SIGN_UP_DATA: 'POST_SIGN_UP_DATA',
 };
 
 const getAsyncCurrentUser = () => {
@@ -31,8 +33,18 @@ const postAsyncSignIn = (params) => {
   };
 };
 
+const postAsyncSignUp = (params) => {
+  return {
+    type: userTypes.POST_SIGN_UP_DATA,
+    payload: {
+      ...params,
+    },
+  };
+};
+
 export default {
   getAsyncCurrentUser,
   getAsyncUserPostsData,
   postAsyncSignIn,
+  postAsyncSignUp,
 };

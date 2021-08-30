@@ -14,7 +14,7 @@ import {
   createPost,
   updatePost,
 } from '../../lib/api/post';
-import { getCurrentUser } from '../../lib/api/auth';
+import { getCurrentUser, signUp } from '../../lib/api/auth';
 import { getUserPosts } from '../../lib/api/user';
 import { signIn } from '../../lib/api/auth';
 import { Types } from './postActions';
@@ -38,6 +38,21 @@ import { userTypes } from './userActions';
 // 5. put(actionをdispatchするとき)
 // 例) APIから受け取ったdataで更新するとき
 // 例) error処理を行うとき
+
+// サインイン
+const runSignUp = function* ({ payload }) {
+  const result = yield call(signUp, payload);
+  yield put({
+    type: userTypes.SET_SIGN_UP,
+    payload: result,
+    status: result.status,
+    headers: result.headers,
+  });
+};
+
+function* signUpWatcher() {
+  yield takeEvery(userTypes.POST_SIGN_UP_DATA, runSignUp);
+}
 
 // ログイン
 const runSignIn = function* ({ payload }) {
@@ -148,5 +163,6 @@ export default function* rootSaga() {
     deleteAsyncDataWatcher(),
     postAsyncData(),
     patchAsyncData(),
+    signUpWatcher(),
   ]);
 }
