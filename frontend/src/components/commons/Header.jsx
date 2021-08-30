@@ -11,8 +11,6 @@ import {
   IconButton,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-// api
-import { signOut } from '../../lib/api/auth';
 // component
 import HeaderDrawer from './HeaderDrawer';
 // redux
@@ -43,35 +41,30 @@ const drawerItem = [
 ];
 
 const Header = () => {
+  const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const asyncCurrentUser = useSelector(
     (state) => state.asyncCurrentUser
   ).payload;
+  const signOutRes = useSelector((state) => state.asyncSignOut);
+  if (signOutRes !== '') {
+    if (signOutRes.status === true) {
+      Cookies.remove('_access_token');
+      Cookies.remove('_client');
+      Cookies.remove('_uid');
+      history.go(0);
+    } else {
+      console.log('failed in sign out');
+    }
+  }
 
   useEffect(() => {
     dispatch(userActions.getAsyncCurrentUser());
   }, []);
 
-  const classes = useStyles();
-  const history = useHistory();
-
-  const handleSignOut = async (e) => {
-    try {
-      const res = await signOut();
-
-      if (res.data.success === true) {
-        Cookies.remove('_access_token');
-        Cookies.remove('_client');
-        Cookies.remove('_uid');
-
-        history.go(0);
-        console.log('succeeded in sign out');
-      } else {
-        console.log('failed in sign out');
-      }
-    } catch (e) {
-      console.log(e);
-    }
+  const handleSignOut = (e) => {
+    dispatch(userActions.postAsyncSignOut());
   };
 
   const AuthButtons = () => {
