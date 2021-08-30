@@ -9,6 +9,8 @@ export const userTypes = {
   POST_SIGN_IN_DATA: 'POST_SIGN_IN_DATA',
   SET_SIGN_UP: 'SET_SIGN_UP',
   POST_SIGN_UP_DATA: 'POST_SIGN_UP_DATA',
+  SET_SIGN_OUT: 'SET_SIGN_OUT',
+  POST_SIGN_OUT_REQUEST: 'POST_SIGN_OUT_REQUEST',
 };
 
 const getAsyncCurrentUser = () => {
@@ -42,9 +44,16 @@ const postAsyncSignUp = (params) => {
   };
 };
 
+const postAsyncSignOut = () => {
+  return {
+    type: userTypes.POST_SIGN_OUT_REQUEST,
+  };
+};
+
 export default {
   getAsyncCurrentUser,
   getAsyncUserPostsData,
   postAsyncSignIn,
   postAsyncSignUp,
+  postAsyncSignOut,
 };

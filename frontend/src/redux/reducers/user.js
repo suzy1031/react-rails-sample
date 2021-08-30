@@ -53,4 +53,23 @@ const asyncSignUp = (state = '', action) => {
   }
 };
 
-export { asyncCurrentUser, asyncUserPostsData, asyncSignIn, asyncSignUp };
+const asyncSignOut = (state = '', action) => {
+  switch (action.type) {
+    case userTypes.SET_SIGN_OUT:
+      return {
+        ...state,
+        payload: action.payload,
+        status: action.payload.data.success,
+      };
+    default:
+      return state;
+  }
+};
+
+export {
+  asyncCurrentUser,
+  asyncUserPostsData,
+  asyncSignIn,
+  asyncSignUp,
+  asyncSignOut,
+};

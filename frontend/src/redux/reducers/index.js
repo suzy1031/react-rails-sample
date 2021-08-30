@@ -5,6 +5,7 @@ import {
   asyncUserPostsData,
   asyncSignIn,
   asyncSignUp,
+  asyncSignOut,
 } from './user';
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   asyncUserPostsData,
   asyncSignIn,
   asyncSignUp,
+  asyncSignOut,
 });
 
 export default rootReducer;
