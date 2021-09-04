@@ -1,7 +1,7 @@
 import client from './client';
 import Cookies from 'js-cookie';
 
-export const getUserPosts = (id) => {
+export const getUserPosts = (id: number) => {
   return client.get(`/users/${id}`, {
     headers: {
       'access-token': Cookies.get('_access_token'),
