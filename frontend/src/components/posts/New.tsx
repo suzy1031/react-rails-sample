@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import FormBody from '../commons/Form';
 import { useHistory } from 'react-router-dom';
 // redux
 import { useDispatch } from 'react-redux';
 import postActions from '../../redux/actions/postActions';
+import { PostParams, GenerateParams } from '../../interfaces/index';
 
-const New = () => {
+const New: FC = (): JSX.Element => {
   const dispatch = useDispatch();
-  const [value, setValue] = useState({
+  const [value, setValue] = useState<PostParams>({
     name: '',
     nekoType: '',
     favoriteFood: '',
@@ -15,18 +16,18 @@ const New = () => {
   });
   const history = useHistory();
 
-  const handleChange = (e) => {
+  const handleChange = (e: { target: { name: string; value: string } }) => {
     setValue({
       ...value,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     console.log(value);
 
-    const params = generateParams();
+    const params: GenerateParams = generateParams();
     dispatch(postActions.postAsyncData(params));
     history.push('/');
   };

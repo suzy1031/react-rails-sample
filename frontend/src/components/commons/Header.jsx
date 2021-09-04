@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 // style

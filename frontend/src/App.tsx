@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,8 +21,8 @@ import { CssBaseline } from '@material-ui/core';
 import { StylesProvider, ThemeProvider } from '@material-ui/styles';
 import { theme } from './styles/theme';
 
-const App = () => {
-  const Private = ({ children }) => {
+const App: FC = (): JSX.Element => {
+  const Private = ({ children }: any) => {
     if (Cookies.get('_uid')) {
       return children;
     } else {
